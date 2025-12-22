@@ -1,0 +1,1105 @@
+@prefix : <http://www.semanticweb.org/ontologies/2025/0/teman-klinik/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://www.semanticweb.org/ontologies/2025/0/teman-klinik/> .
+
+<http://www.semanticweb.org/ontologies/2025/0/teman-klinik> rdf:type owl:Ontology ;
+    owl:versionIRI <http://www.semanticweb.org/ontologies/2025/0/teman-klinik/2.0.0> ;
+    rdfs:label "Teman Klinik Ontology"@id ;
+    rdfs:comment "Ontology untuk sistem rekomendasi obat simptomatis berbasis Semantic Web"@id .
+
+skos:prefLabel rdf:type owl:AnnotationProperty .
+skos:altLabel rdf:type owl:AnnotationProperty .
+skos:definition rdf:type owl:AnnotationProperty .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/alergiTerhadap
+:alergiTerhadap rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :merupakanAlergenBagi ;
+    rdfs:domain :Pasien ;
+    rdfs:range :BahanAktif ;
+    rdfs:label "alergi terhadap"@id ;
+    rdfs:comment "Menghubungkan pasien dengan bahan aktif yang menyebabkan alergi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/merupakanAlergenBagi
+:merupakanAlergenBagi rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :BahanAktif ;
+    rdfs:range :Pasien ;
+    rdfs:label "merupakan alergen bagi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/dapatDiobatiDengan
+:dapatDiobatiDengan rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :mengobati ;
+    rdfs:domain :Penyakit ;
+    rdfs:range :Obat ;
+    rdfs:label "dapat diobati dengan"@id ;
+    rdfs:comment "Menghubungkan penyakit dengan obat yang dapat mengobatinya"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/mengobati
+:mengobati rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range :Penyakit ;
+    rdfs:label "mengobati"@id ;
+    rdfs:comment "Menghubungkan obat dengan penyakit yang dapat diobatinya"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiPenyakit
+:memilikiPenyakit rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :dideritaOleh ;
+    rdfs:domain :Pasien ;
+    rdfs:range :Penyakit ;
+    rdfs:label "memiliki penyakit"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/dideritaOleh
+:dideritaOleh rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Penyakit ;
+    rdfs:range :Pasien ;
+    rdfs:label "diderita oleh"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiGejala
+:memilikiGejala rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :merupakanGejala ;
+    rdfs:domain :Penyakit ;
+    rdfs:range :Gejala ;
+    rdfs:label "memiliki gejala"@id ;
+    rdfs:comment "Menghubungkan penyakit dengan gejala-gejala yang ditimbulkan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/merupakanGejala
+:merupakanGejala rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Gejala ;
+    rdfs:range :Penyakit ;
+    rdfs:label "merupakan gejala dari"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/mengandungBahanAktif
+:mengandungBahanAktif rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :terkandungDalam ;
+    rdfs:domain :Obat ;
+    rdfs:range :BahanAktif ;
+    rdfs:label "mengandung bahan aktif"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/terkandungDalam
+:terkandungDalam rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :BahanAktif ;
+    rdfs:range :Obat ;
+    rdfs:label "terkandung dalam"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiKondisi
+:memilikiKondisi rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :kondisiDimilikiOleh ;
+    rdfs:domain :Pasien ;
+    rdfs:range :KelompokPasien ;
+    rdfs:label "memiliki kondisi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/kondisiDimilikiOleh
+:kondisiDimilikiOleh rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :KelompokPasien ;
+    rdfs:range :Pasien ;
+    rdfs:label "kondisi dimiliki oleh"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/tidakBolehUntuk
+:tidakBolehUntuk rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :tidakBolehMengkonsumsi ;
+    rdfs:domain :Obat ;
+    rdfs:range :KelompokPasien ;
+    rdfs:label "tidak boleh untuk"@id ;
+    rdfs:comment "Menghubungkan obat dengan kelompok pasien yang tidak boleh mengkonsumsinya"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/tidakBolehMengkonsumsi
+:tidakBolehMengkonsumsi rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :KelompokPasien ;
+    rdfs:range :Obat ;
+    rdfs:label "tidak boleh mengkonsumsi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/terkaitDenganGejala
+:terkaitDenganGejala rdf:type owl:ObjectProperty, owl:SymmetricProperty, owl:TransitiveProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Gejala ;
+    rdfs:range :Gejala ;
+    rdfs:label "terkait dengan gejala"@id ;
+    rdfs:comment "Relasi simetris dan transitif antar gejala yang sering muncul bersamaan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/menyebabkanEfekSamping
+:menyebabkanEfekSamping rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :efekSampingDari ;
+    rdfs:domain :Obat ;
+    rdfs:range :EfekSamping ;
+    rdfs:label "menyebabkan efek samping"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/efekSampingDari
+:efekSampingDari rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :EfekSamping ;
+    rdfs:range :Obat ;
+    rdfs:label "efek samping dari"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/berinteraksiDengan
+:berinteraksiDengan rdf:type owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range :Obat ;
+    rdfs:label "berinteraksi dengan"@id ;
+    rdfs:comment "Relasi simetris antara obat yang memiliki interaksi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/alternatifDari
+:alternatifDari rdf:type owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range :Obat ;
+    rdfs:label "alternatif dari"@id ;
+    rdfs:comment "Obat yang dapat digunakan sebagai pengganti"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/termasukKategori
+:termasukKategori rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :memilikiAnggota ;
+    rdfs:domain :Obat ;
+    rdfs:range :KategoriObat ;
+    rdfs:label "termasuk kategori"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiAnggota
+:memilikiAnggota rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :KategoriObat ;
+    rdfs:range :Obat ;
+    rdfs:label "memiliki anggota"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiTingkatKeparahan
+:memilikiTingkatKeparahan rdf:type owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Gejala ;
+    rdfs:range :TingkatKeparahan ;
+    rdfs:label "memiliki tingkat keparahan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/memilikiObatYangDiperlukan
+:memilikiObatYangDiperlukan rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Pasien ;
+    rdfs:range :Obat ;
+    owl:propertyChainAxiom ( :memilikiPenyakit :dapatDiobatiDengan ) ;
+    rdfs:label "memiliki obat yang diperlukan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/meredakanGejala
+:meredakanGejala rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf :diredakanOleh ;
+    rdfs:domain :Obat ;
+    rdfs:range :Gejala ;
+    rdfs:label "meredakan gejala"@id ;
+    rdfs:comment "Hubungan langsung obat dengan gejala yang dapat diredakan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/diredakanOleh
+:diredakanOleh rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    rdfs:domain :Gejala ;
+    rdfs:range :Obat ;
+    rdfs:label "diredakan oleh"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/namaLengkap
+:namaLengkap rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Pasien ;
+    rdfs:range xsd:string ;
+    rdfs:label "nama lengkap"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/umur
+:umur rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Pasien ;
+    rdfs:range xsd:integer ;
+    rdfs:label "umur"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/deskripsiSingkat
+:deskripsiSingkat rdf:type owl:DatatypeProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string ;
+    rdfs:label "deskripsi singkat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/dosisObat
+:dosisObat rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "dosis obat"@id ;
+    rdfs:comment "Dosis dan aturan pakai obat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/caraPakai
+:caraPakai rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "cara pakai"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/hargaObat
+:hargaObat rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "harga obat"@id ;
+    rdfs:comment "Perkiraan harga obat dalam Rupiah"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/golonganObat
+:golonganObat rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "golongan obat"@id ;
+    rdfs:comment "Bebas, Bebas Terbatas, Keras, Narkotika"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/bentukSediaan
+:bentukSediaan rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "bentuk sediaan"@id ;
+    rdfs:comment "Tablet, Sirup, Kapsul, Krim, dll"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/peringatan
+:peringatan rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "peringatan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/urlWikidata
+:urlWikidata rdf:type owl:DatatypeProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "URL Wikidata"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/gambarURL
+:gambarURL rdf:type owl:DatatypeProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "gambar URL"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/tingkatUrgensity
+:tingkatUrgensity rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Gejala ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tingkat urgensi"@id ;
+    rdfs:comment "Skala 1-5, semakin tinggi semakin perlu penanganan cepat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/contohMerek
+:contohMerek rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Obat ;
+    rdfs:range xsd:string ;
+    rdfs:label "contoh merek"@id ;
+    rdfs:comment "Contoh nama merek dagang di pasaran Indonesia"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/BahanAktif
+:BahanAktif rdf:type owl:Class ;
+    owl:disjointWith :Gejala, :KelompokPasien, :Obat, :Pasien, :Penyakit ;
+    rdfs:label "Bahan Aktif"@id ;
+    rdfs:comment "Zat aktif yang terkandung dalam obat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Gejala
+:Gejala rdf:type owl:Class ;
+    owl:disjointWith :KelompokPasien, :Obat, :Pasien, :Penyakit ;
+    rdfs:label "Gejala"@id ;
+    rdfs:comment "Tanda-tanda atau keluhan yang dirasakan pasien"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KelompokPasien
+:KelompokPasien rdf:type owl:Class ;
+    owl:disjointWith :Obat, :Pasien, :Penyakit ;
+    rdfs:label "Kelompok Pasien"@id ;
+    rdfs:comment "Kategori pasien berdasarkan kondisi khusus"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Obat
+:Obat rdf:type owl:Class ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                      owl:onProperty :mengandungBahanAktif ;
+                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                      owl:onClass :BahanAktif ] ;
+    owl:disjointWith :Pasien, :Penyakit ;
+    rdfs:label "Obat"@id ;
+    rdfs:comment "Produk farmasi untuk mengobati penyakit"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Pasien
+:Pasien rdf:type owl:Class ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                      owl:onProperty :memilikiPenyakit ;
+                      owl:maxQualifiedCardinality "10"^^xsd:nonNegativeInteger ;
+                      owl:onClass :Penyakit ] ;
+    owl:disjointWith :Penyakit ;
+    rdfs:label "Pasien"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Penyakit
+:Penyakit rdf:type owl:Class ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                      owl:onProperty :dapatDiobatiDengan ;
+                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                      owl:onClass :Obat ],
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :memilikiGejala ;
+                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                      owl:onClass :Gejala ] ;
+    rdfs:label "Penyakit"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/EfekSamping
+:EfekSamping rdf:type owl:Class ;
+    rdfs:label "Efek Samping"@id ;
+    rdfs:comment "Efek tidak diinginkan dari penggunaan obat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KategoriObat
+:KategoriObat rdf:type owl:Class ;
+    rdfs:label "Kategori Obat"@id ;
+    rdfs:comment "Klasifikasi obat (Analgesik, Antihistamin, dll)"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/TingkatKeparahan
+:TingkatKeparahan rdf:type owl:Class ;
+    owl:equivalentClass [ rdf:type owl:Class ;
+                          owl:oneOf ( :Ringan :Sedang :Berat ) ] ;
+    rdfs:label "Tingkat Keparahan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/ObatWajibP3K
+:ObatWajibP3K rdf:type owl:Class ;
+    owl:equivalentClass [ rdf:type owl:Class ;
+                          owl:oneOf ( :Oralit :Paracetamol500mg ) ] ;
+    rdfs:subClassOf :Obat ;
+    rdfs:label "Obat Wajib P3K"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Ringan
+:Ringan rdf:type owl:NamedIndividual, :TingkatKeparahan ;
+    rdfs:label "Ringan"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Sedang
+:Sedang rdf:type owl:NamedIndividual, :TingkatKeparahan ;
+    rdfs:label "Sedang"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Berat
+:Berat rdf:type owl:NamedIndividual, :TingkatKeparahan ;
+    rdfs:label "Berat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Analgesik
+:Analgesik rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Analgesik"@id ;
+    rdfs:comment "Obat pereda nyeri"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Antipiretik
+:Antipiretik rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Antipiretik"@id ;
+    rdfs:comment "Obat penurun demam"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Antihistamin
+:Antihistamin rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Antihistamin"@id ;
+    rdfs:comment "Obat anti alergi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Antasida
+:Antasida rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Antasida"@id ;
+    rdfs:comment "Obat penetral asam lambung"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Laksatif
+:Laksatif rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Laksatif"@id ;
+    rdfs:comment "Obat pencahar"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Antitusif
+:Antitusif rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Antitusif"@id ;
+    rdfs:comment "Obat penekan batuk"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Ekspektoran
+:Ekspektoran rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Ekspektoran"@id ;
+    rdfs:comment "Obat pengencer dahak"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Dekongestif
+:Dekongestif rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Dekongestif"@id ;
+    rdfs:comment "Obat pelega hidung tersumbat"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/RehidrasiOral
+:RehidrasiOral rdf:type owl:NamedIndividual, :KategoriObat ;
+    rdfs:label "Rehidrasi Oral"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Mengantuk
+:Mengantuk rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Mengantuk"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MulutKering
+:MulutKering rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Mulut Kering"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/GangguanLambung
+:GangguanLambung rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Gangguan Lambung"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KenaikanTekananDarah
+:KenaikanTekananDarah rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Kenaikan Tekanan Darah"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Konstipasi
+:Konstipasi rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Konstipasi"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Diare
+:Diare rdf:type owl:NamedIndividual, :EfekSamping ;
+    rdfs:label "Diare"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AlergiAspirin
+:AlergiAspirin rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Alergi Aspirin"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AnakDibawah12Tahun
+:AnakDibawah12Tahun rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Anak Dibawah 12 Tahun"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/IbuHamil
+:IbuHamil rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Ibu Hamil"@id ;
+    :tidakBolehMengkonsumsi :DekongestanOral .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/IbuMenyusui
+:IbuMenyusui rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Ibu Menyusui"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PenderitaHipertensi
+:PenderitaHipertensi rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Penderita Hipertensi"@id ;
+    :tidakBolehMengkonsumsi :DekongestanOral .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PenderitaMaag
+:PenderitaMaag rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Penderita Maag"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PenderitaDiabetes
+:PenderitaDiabetes rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Penderita Diabetes"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Lansia
+:Lansia rdf:type owl:NamedIndividual, :KelompokPasien ;
+    rdfs:label "Lansia"@id ;
+    rdfs:comment "Pasien berusia 60 tahun ke atas"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Paracetamol
+:Paracetamol rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Paracetamol"@id ;
+    skos:altLabel "Acetaminophen"@en ;
+    owl:sameAs <http://www.wikidata.org/entity/Q57055> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q57055"^^xsd:anyURI ;
+    :deskripsiSingkat "Zat aktif analgesik dan antipiretik"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Aspirin
+:Aspirin rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Aspirin"@id ;
+    skos:altLabel "Asam Asetilsalisilat"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q18216> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q18216"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Ibuprofen
+:Ibuprofen rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Ibuprofen"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q186280> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q186280"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Cetirizine
+:Cetirizine rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Cetirizine"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q422252> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q422252"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Loratadine
+:Loratadine rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Loratadine"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q422189> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q422189"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Diphenhydramine
+:Diphenhydramine rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Diphenhydramine"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q326215> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q326215"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Dextromethorphan
+:Dextromethorphan rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Dextromethorphan"@id ;
+    skos:altLabel "DXM"@en ;
+    owl:sameAs <http://www.wikidata.org/entity/Q421216> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q421216"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Guaifenesin
+:Guaifenesin rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Guaifenesin"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q422619> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q422619"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Pseudoefedrin
+:Pseudoefedrin rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Pseudoefedrin"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q422601> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q422601"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AluminiumHidroksida
+:AluminiumHidroksida rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Aluminium Hidroksida"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q407943> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q407943"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MagnesiumHidroksida
+:MagnesiumHidroksida rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Magnesium Hidroksida"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q407810> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q407810"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Bisacodyl
+:Bisacodyl rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Bisacodyl"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q810687> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q810687"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Loperamide
+:Loperamide rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Loperamide"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q422395> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q422395"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Mentol
+:Mentol rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Mentol"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q407418> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q407418"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/NatriumKlorida
+:NatriumKlorida rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Natrium Klorida"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q2314> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q2314"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Glukosa
+:Glukosa rdf:type owl:NamedIndividual, :BahanAktif ;
+    rdfs:label "Glukosa"@id ;
+    owl:sameAs <http://www.wikidata.org/entity/Q37525> ;
+    :urlWikidata "https://www.wikidata.org/wiki/Q37525"^^xsd:anyURI .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Demam
+:Demam rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Demam"@id ;
+    :deskripsiSingkat "Suhu tubuh diatas normal (>37.5°C)"@id ;
+    :tingkatUrgensity 3 ;
+    :memilikiTingkatKeparahan :Sedang ;
+    :terkaitDenganGejala :MeraSaLemah ;
+    :diredakanOleh :Paracetamol500mg .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SakitKepala
+:SakitKepala rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Sakit Kepala"@id ;
+    :deskripsiSingkat "Nyeri atau rasa tidak nyaman di kepala"@id ;
+    :tingkatUrgensity 2 ;
+    :memilikiTingkatKeparahan :Ringan ;
+    :terkaitDenganGejala :Pusing ;
+    :diredakanOleh :Paracetamol500mg .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Pusing
+:Pusing rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Pusing"@id ;
+    :tingkatUrgensity 2 ;
+    :memilikiTingkatKeparahan :Ringan ;
+    :terkaitDenganGejala :MataBerkunang .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MataBerkunang
+:MataBerkunang rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Mata Berkunang"@id ;
+    :tingkatUrgensity 2 .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MeraSaLemah
+:MeraSaLemah rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Merasa Lemah"@id ;
+    :tingkatUrgensity 2 ;
+    :terkaitDenganGejala :PegalPegal .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PegalPegal
+:PegalPegal rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Pegal-pegal"@id ;
+    :tingkatUrgensity 1 ;
+    :memilikiTingkatKeparahan :Ringan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/NyeriOtot
+:NyeriOtot rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Nyeri Otot"@id ;
+    :tingkatUrgensity 2 ;
+    :diredakanOleh :Paracetamol500mg .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/BatukKering
+:BatukKering rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Batuk Kering"@id ;
+    :deskripsiSingkat "Batuk tanpa dahak"@id ;
+    :tingkatUrgensity 2 ;
+    :terkaitDenganGejala :SakitTenggorokan ;
+    :diredakanOleh :ObatBatukAntitusif .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/BatukBerdahak
+:BatukBerdahak rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Batuk Berdahak"@id ;
+    :deskripsiSingkat "Batuk disertai dahak"@id ;
+    :tingkatUrgensity 2 ;
+    :diredakanOleh :ObatBatukEkspektoran .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SakitTenggorokan
+:SakitTenggorokan rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Sakit Tenggorokan"@id ;
+    :tingkatUrgensity 2 ;
+    :memilikiTingkatKeparahan :Ringan ;
+    :diredakanOleh :LozengeTenggorokan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Pilek
+:Pilek rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Pilek"@id ;
+    :deskripsiSingkat "Hidung mengeluarkan cairan"@id ;
+    :tingkatUrgensity 1 ;
+    :memilikiTingkatKeparahan :Ringan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/HidungTersumbat
+:HidungTersumbat rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Hidung Tersumbat"@id ;
+    :tingkatUrgensity 2 ;
+    :terkaitDenganGejala :Pilek ;
+    :diredakanOleh :DekongestanOral .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/BersinBersin
+:BersinBersin rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Bersin-bersin"@id ;
+    :tingkatUrgensity 1 ;
+    :terkaitDenganGejala :HidungTersumbat ;
+    :diredakanOleh :AntihistaminNonSedatif .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/RuamGatal
+:RuamGatal rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Ruam Gatal"@id ;
+    :tingkatUrgensity 2 ;
+    :diredakanOleh :KrimAntigatal, :AntihistaminNonSedatif .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Mual
+:Mual rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Mual"@id ;
+    :tingkatUrgensity 2 ;
+    :terkaitDenganGejala :KramPerut .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KramPerut
+:KramPerut rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Kram Perut"@id ;
+    :tingkatUrgensity 3 ;
+    :terkaitDenganGejala :PerutKembung .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PerutKembung
+:PerutKembung rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Perut Kembung"@id ;
+    :tingkatUrgensity 1 ;
+    :memilikiTingkatKeparahan :Ringan ;
+    :diredakanOleh :AntasidaSederhana .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/NyeriUluHati
+:NyeriUluHati rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Nyeri Ulu Hati"@id ;
+    :deskripsiSingkat "Nyeri di daerah perut atas"@id ;
+    :tingkatUrgensity 3 ;
+    :diredakanOleh :AntasidaSederhana .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/BABCair
+:BABCair rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "BAB Cair"@id ;
+    :deskripsiSingkat "Buang air besar dengan konsistensi cair"@id ;
+    :tingkatUrgensity 3 ;
+    :terkaitDenganGejala :KramPerut ;
+    :diredakanOleh :Oralit .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SulitBAB
+:SulitBAB rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Sulit BAB"@id ;
+    :deskripsiSingkat "Kesulitan buang air besar"@id ;
+    :tingkatUrgensity 2 ;
+    :diredakanOleh :LaksatifRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SulitTidur
+:SulitTidur rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Sulit Tidur"@id ;
+    :tingkatUrgensity 2 ;
+    :diredakanOleh :AntihistaminSedatif .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SesakNapas
+:SesakNapas rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Sesak Napas"@id ;
+    :tingkatUrgensity 5 ;
+    :memilikiTingkatKeparahan :Berat ;
+    :deskripsiSingkat "PERINGATAN: Segera ke dokter jika sesak napas berat!"@id .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PanasDalam
+:PanasDalam rdf:type owl:NamedIndividual, :Gejala ;
+    rdfs:label "Panas Dalam"@id ;
+    :tingkatUrgensity 1 .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Paracetamol500mg
+:Paracetamol500mg rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Paracetamol 500mg"@id ;
+    :deskripsiSingkat "Obat pereda nyeri dan penurun demam"@id ;
+    :mengandungBahanAktif :Paracetamol ;
+    :termasukKategori :Analgesik, :Antipiretik ;
+    :dosisObat "Dewasa: 1-2 tablet, 3-4x sehari. Maksimal 8 tablet/hari"@id ;
+    :caraPakai "Diminum setelah makan dengan air putih"@id ;
+    :hargaObat 5000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Tablet"@id ;
+    :contohMerek "Panadol, Bodrex, Sanmol, Paramex, Biogesic"@id ;
+    :peringatan "Jangan melebihi dosis. Hati-hati pada gangguan liver."@id ;
+    :meredakanGejala :Demam, :SakitKepala, :NyeriOtot, :PegalPegal ;
+    :mengobati :DemamRingan, :SakitKepalaTegang, :NyeriOtotRingan, :MigrainRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AntihistaminNonSedatif
+:AntihistaminNonSedatif rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Antihistamin Non-Sedatif"@id ;
+    :deskripsiSingkat "Obat alergi yang tidak menyebabkan kantuk"@id ;
+    :mengandungBahanAktif :Cetirizine, :Loratadine ;
+    :termasukKategori :Antihistamin ;
+    :dosisObat "Dewasa: 1 tablet, 1x sehari"@id ;
+    :caraPakai "Diminum kapan saja"@id ;
+    :hargaObat 15000 ;
+    :golonganObat "Bebas Terbatas"@id ;
+    :bentukSediaan "Tablet"@id ;
+    :contohMerek "Claritin, Incidal-OD, Alloris, Ryvel, Ozen"@id ;
+    :meredakanGejala :BersinBersin, :RuamGatal, :HidungTersumbat ;
+    :mengobati :AlergiRingan, :RinitisRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AntihistaminSedatif
+:AntihistaminSedatif rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Antihistamin Sedatif"@id ;
+    :deskripsiSingkat "Obat alergi yang dapat membantu tidur"@id ;
+    :mengandungBahanAktif :Diphenhydramine ;
+    :termasukKategori :Antihistamin ;
+    :dosisObat "Dewasa: 1 tablet sebelum tidur"@id ;
+    :caraPakai "Diminum 30 menit sebelum tidur"@id ;
+    :hargaObat 8000 ;
+    :golonganObat "Bebas Terbatas"@id ;
+    :bentukSediaan "Tablet"@id ;
+    :contohMerek "Benadryl, CTM, Alpara"@id ;
+    :menyebabkanEfekSamping :Mengantuk, :MulutKering ;
+    :peringatan "Jangan mengendarai kendaraan setelah minum obat ini"@id ;
+    :meredakanGejala :SulitTidur ;
+    :mengobati :InsomniaRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/ObatBatukAntitusif
+:ObatBatukAntitusif rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Obat Batuk Antitusif"@id ;
+    :deskripsiSingkat "Obat penekan batuk kering"@id ;
+    :mengandungBahanAktif :Dextromethorphan ;
+    :termasukKategori :Antitusif ;
+    :dosisObat "Dewasa: 10-20ml, 3x sehari"@id ;
+    :caraPakai "Diminum setelah makan"@id ;
+    :hargaObat 25000 ;
+    :golonganObat "Bebas Terbatas"@id ;
+    :bentukSediaan "Sirup"@id ;
+    :contohMerek "OBH Combi, Woods, Vicks Formula 44"@id ;
+    :meredakanGejala :BatukKering ;
+    :mengobati :FluCommonCold .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/ObatBatukEkspektoran
+:ObatBatukEkspektoran rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Obat Batuk Ekspektoran"@id ;
+    :deskripsiSingkat "Obat pengencer dan pengeluaran dahak"@id ;
+    :mengandungBahanAktif :Guaifenesin ;
+    :termasukKategori :Ekspektoran ;
+    :dosisObat "Dewasa: 10-20ml, 3x sehari"@id ;
+    :caraPakai "Diminum setelah makan, perbanyak minum air"@id ;
+    :hargaObat 20000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Sirup"@id ;
+    :contohMerek "Bisolvon, Mucopect, Ambroxol"@id ;
+    :meredakanGejala :BatukBerdahak ;
+    :mengobati :FluCommonCold .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/DekongestanOral
+:DekongestanOral rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Dekongestif Oral"@id ;
+    :deskripsiSingkat "Obat pelega hidung tersumbat"@id ;
+    :mengandungBahanAktif :Pseudoefedrin ;
+    :termasukKategori :Dekongestif ;
+    :dosisObat "Dewasa: 1 tablet, 3x sehari"@id ;
+    :caraPakai "Diminum setelah makan"@id ;
+    :hargaObat 12000 ;
+    :golonganObat "Bebas Terbatas"@id ;
+    :bentukSediaan "Tablet"@id ;
+    :contohMerek "Sudafed, Actifed, Rhinos SR"@id ;
+    :tidakBolehUntuk :PenderitaHipertensi, :IbuHamil ;
+    :menyebabkanEfekSamping :KenaikanTekananDarah ;
+    :peringatan "TIDAK untuk penderita hipertensi dan jantung"@id ;
+    :meredakanGejala :HidungTersumbat ;
+    :mengobati :RinitisRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AntasidaSederhana
+:AntasidaSederhana rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Antasida"@id ;
+    :deskripsiSingkat "Obat penetral asam lambung"@id ;
+    :mengandungBahanAktif :AluminiumHidroksida, :MagnesiumHidroksida ;
+    :termasukKategori :Antasida ;
+    :dosisObat "Dewasa: 1-2 tablet dikunyah, 3-4x sehari"@id ;
+    :caraPakai "Dikunyah 1 jam setelah makan atau saat gejala muncul"@id ;
+    :hargaObat 8000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Tablet Kunyah"@id ;
+    :contohMerek "Promag, Mylanta, Polysilane, Gastran"@id ;
+    :menyebabkanEfekSamping :Konstipasi, :Diare ;
+    :meredakanGejala :NyeriUluHati, :PerutKembung, :Mual ;
+    :mengobati :MaagDispepsiaRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/LaksatifRingan
+:LaksatifRingan rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Laksatif Ringan"@id ;
+    :deskripsiSingkat "Obat pencahar untuk konstipasi"@id ;
+    :mengandungBahanAktif :Bisacodyl ;
+    :termasukKategori :Laksatif ;
+    :dosisObat "Dewasa: 1-2 tablet sebelum tidur"@id ;
+    :caraPakai "Diminum sebelum tidur dengan segelas air"@id ;
+    :hargaObat 10000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Tablet"@id ;
+    :contohMerek "Dulcolax, Laxadine, Microlax"@id ;
+    :peringatan "Jangan gunakan jangka panjang"@id ;
+    :meredakanGejala :SulitBAB ;
+    :mengobati :KonstipasiRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/Oralit
+:Oralit rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Oralit"@id ;
+    :deskripsiSingkat "Larutan rehidrasi oral untuk diare"@id ;
+    :mengandungBahanAktif :NatriumKlorida, :Glukosa ;
+    :termasukKategori :RehidrasiOral ;
+    :dosisObat "Larutkan 1 sachet dalam 200ml air matang"@id ;
+    :caraPakai "Minum sedikit-sedikit setelah BAB atau muntah"@id ;
+    :hargaObat 2500 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Serbuk"@id ;
+    :contohMerek "Oralit, Pedialyte, Renalyte"@id ;
+    :meredakanGejala :BABCair ;
+    :mengobati :DiareRingan, :ISPARingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KrimAntigatal
+:KrimAntigatal rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Krim Antigatal"@id ;
+    :deskripsiSingkat "Krim untuk meredakan gatal dan iritasi kulit"@id ;
+    :mengandungBahanAktif :Mentol ;
+    :dosisObat "Oleskan tipis pada area gatal, 2-3x sehari"@id ;
+    :caraPakai "Oleskan pada kulit bersih dan kering"@id ;
+    :hargaObat 15000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Krim"@id ;
+    :contohMerek "Caladine, Caladryl, Herocyn"@id ;
+    :meredakanGejala :RuamGatal ;
+    :mengobati :AlergiRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/LozengeTenggorokan
+:LozengeTenggorokan rdf:type owl:NamedIndividual, :Obat ;
+    rdfs:label "Lozenges Tenggorokan"@id ;
+    :deskripsiSingkat "Permen pelega tenggorokan"@id ;
+    :mengandungBahanAktif :Mentol ;
+    :dosisObat "1 lozenges setiap 2-3 jam, max 8/hari"@id ;
+    :caraPakai "Dihisap perlahan sampai habis"@id ;
+    :hargaObat 5000 ;
+    :golonganObat "Bebas"@id ;
+    :bentukSediaan "Lozenges"@id ;
+    :contohMerek "Strepsils, FG Troches, Decolgen Lozenges"@id ;
+    :meredakanGejala :SakitTenggorokan ;
+    :mengobati :RadangTenggorokanRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/DemamRingan
+:DemamRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Demam Ringan"@id ;
+    :deskripsiSingkat "Demam dengan suhu 37.5-38.5°C"@id ;
+    :dapatDiobatiDengan :Paracetamol500mg ;
+    :memilikiGejala :Demam, :MeraSaLemah .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/FluCommonCold
+:FluCommonCold rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Flu / Common Cold"@id ;
+    :deskripsiSingkat "Infeksi virus saluran pernapasan atas"@id ;
+    :dapatDiobatiDengan :Paracetamol500mg, :ObatBatukAntitusif, :ObatBatukEkspektoran ;
+    :memilikiGejala :Demam, :BatukKering, :BatukBerdahak, :Pilek, :SakitTenggorokan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/AlergiRingan
+:AlergiRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Alergi Ringan"@id ;
+    :deskripsiSingkat "Reaksi alergi ringan pada kulit atau pernapasan"@id ;
+    :dapatDiobatiDengan :AntihistaminNonSedatif, :KrimAntigatal ;
+    :memilikiGejala :BersinBersin, :HidungTersumbat, :RuamGatal .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/RinitisRingan
+:RinitisRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Rinitis Alergi Ringan"@id ;
+    :deskripsiSingkat "Peradangan rongga hidung akibat alergi"@id ;
+    :dapatDiobatiDengan :AntihistaminNonSedatif, :DekongestanOral ;
+    :memilikiGejala :BersinBersin, :HidungTersumbat, :Pilek .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MaagDispepsiaRingan
+:MaagDispepsiaRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Maag / Dispepsia Ringan"@id ;
+    :deskripsiSingkat "Gangguan pencernaan dengan nyeri ulu hati"@id ;
+    :dapatDiobatiDengan :AntasidaSederhana ;
+    :memilikiGejala :NyeriUluHati, :PerutKembung, :Mual .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/DiareRingan
+:DiareRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Diare Ringan"@id ;
+    :deskripsiSingkat "BAB cair lebih dari 3x sehari"@id ;
+    :dapatDiobatiDengan :Oralit ;
+    :memilikiGejala :BABCair, :KramPerut, :Mual .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/ISPARingan
+:ISPARingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "ISPA Ringan"@id ;
+    :deskripsiSingkat "Infeksi Saluran Pernapasan Akut ringan"@id ;
+    :dapatDiobatiDengan :Oralit ;
+    :memilikiGejala :BABCair, :Demam, :KramPerut, :Mual .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/KonstipasiRingan
+:KonstipasiRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Konstipasi Ringan"@id ;
+    :deskripsiSingkat "Kesulitan BAB kurang dari 3x seminggu"@id ;
+    :dapatDiobatiDengan :LaksatifRingan ;
+    :memilikiGejala :SulitBAB, :PerutKembung .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/InsomniaRingan
+:InsomniaRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Insomnia Ringan"@id ;
+    :deskripsiSingkat "Kesulitan tidur sesekali"@id ;
+    :dapatDiobatiDengan :AntihistaminSedatif ;
+    :memilikiGejala :SulitTidur .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/SakitKepalaTegang
+:SakitKepalaTegang rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Sakit Kepala Tegang"@id ;
+    :deskripsiSingkat "Nyeri kepala akibat ketegangan otot"@id ;
+    :dapatDiobatiDengan :Paracetamol500mg ;
+    :memilikiGejala :SakitKepala .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MigrainRingan
+:MigrainRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Migrain Ringan"@id ;
+    :deskripsiSingkat "Sakit kepala sebelah yang berdenyut"@id ;
+    :dapatDiobatiDengan :Paracetamol500mg ;
+    :memilikiGejala :SakitKepala, :Pusing, :MataBerkunang .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/NyeriOtotRingan
+:NyeriOtotRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Nyeri Otot Ringan"@id ;
+    :deskripsiSingkat "Nyeri otot akibat aktivitas fisik"@id ;
+    :dapatDiobatiDengan :Paracetamol500mg ;
+    :memilikiGejala :NyeriOtot, :PegalPegal .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/RadangTenggorokanRingan
+:RadangTenggorokanRingan rdf:type owl:NamedIndividual, :Penyakit ;
+    rdfs:label "Radang Tenggorokan Ringan"@id ;
+    :deskripsiSingkat "Peradangan ringan pada tenggorokan"@id ;
+    :dapatDiobatiDengan :LozengeTenggorokan, :Paracetamol500mg ;
+    :memilikiGejala :SakitTenggorokan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PasienBudi
+:PasienBudi rdf:type owl:NamedIndividual, :Pasien ;
+    rdfs:label "Pasien Budi"@id ;
+    :namaLengkap "Budi Santoso" ;
+    :umur 45 ;
+    :alergiTerhadap :Aspirin ;
+    :memilikiKondisi :PenderitaHipertensi ;
+    :memilikiPenyakit :FluCommonCold .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PasienSiti
+:PasienSiti rdf:type owl:NamedIndividual, :Pasien ;
+    rdfs:label "Pasien Siti"@id ;
+    :namaLengkap "Siti Nurhaliza" ;
+    :umur 30 ;
+    :alergiTerhadap :Aspirin ;
+    :memilikiKondisi :IbuHamil ;
+    :memilikiPenyakit :MaagDispepsiaRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PasienAndi
+:PasienAndi rdf:type owl:NamedIndividual, :Pasien ;
+    rdfs:label "Pasien Andi"@id ;
+    :namaLengkap "Andi Pratama" ;
+    :umur 55 ;
+    :memilikiKondisi :PenderitaHipertensi ;
+    :memilikiPenyakit :RinitisRingan .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PasienRina
+:PasienRina rdf:type owl:NamedIndividual, :Pasien ;
+    rdfs:label "Pasien Rina"@id ;
+    :namaLengkap "Rina Sari" ;
+    :umur 8 ;
+    :memilikiKondisi :AnakDibawah12Tahun ;
+    :memilikiPenyakit :FluCommonCold .
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PasienDedi
+:PasienDedi rdf:type owl:NamedIndividual, :Pasien ;
+    rdfs:label "Pasien Dedi"@id ;
+    :namaLengkap "Dedi Kurniawan" ;
+    :umur 35 ;
+    :alergiTerhadap :Aspirin ;
+    :memilikiKondisi :PenderitaMaag ;
+    :memilikiPenyakit :DiareRingan, :KonstipasiRingan .
+
+
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/PengobatanAlternatif
+:PengobatanAlternatif rdf:type owl:Class ;
+    rdfs:subClassOf :Obat ;
+    rdfs:label "Pengobatan Alternatif / Herbal"@id ;
+    rdfs:comment "Pengobatan menggunakan bahan alami atau metode tradisional"@id .
+
+# 1. Inhaler Hidung (Alternatif untuk Dekongestan - Hipertensi Friendly)
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/InhalerHidung
+:InhalerHidung rdf:type owl:NamedIndividual, :PengobatanAlternatif ;
+    rdfs:label "Inhaler Hidung (Aromaterapi)"@id ;
+    :deskripsiSingkat "Pelega hidung tersumbat berbasis mentol alami"@id ;
+    :mengandungBahanAktif :Mentol ;
+    :termasukKategori :Dekongestif ;
+    :dosisObat "Hirup secukupnya saat hidung tersumbat"@id ;
+    :caraPakai "Dihirup melalui hidung"@id ;
+    :hargaObat 15000 ;
+    :golonganObat "Herbal"@id ;
+    :bentukSediaan "Inhaler"@id ;
+    :alternatifDari :DekongestanOral ;
+    :meredakanGejala :HidungTersumbat .
+
+:DekongestanOral :alternatifDari :InhalerHidung .
+
+# 2. Madu Murni (Alternatif untuk Obat Batuk - Aman untuk Anak/Ibu Hamil)
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/MaduMurni
+:MaduMurni rdf:type owl:NamedIndividual, :PengobatanAlternatif ;
+    rdfs:label "Madu Murni"@id ;
+    :deskripsiSingkat "Pereda batuk dan sakit tenggorokan alami"@id ;
+    :termasukKategori :Ekspektoran ;
+    :dosisObat "1 Sendok makan, 3x sehari"@id ;
+    :caraPakai "Diminum langsung atau dicampur air hangat"@id ;
+    :hargaObat 50000 ;
+    :golonganObat "Herbal"@id ;
+    :bentukSediaan "Cairan Kental"@id ;
+    :alternatifDari :ObatBatukEkspektoran, :ObatBatukAntitusif ;
+    :meredakanGejala :BatukBerdahak, :BatukKering, :SakitTenggorokan .
+
+:ObatBatukEkspektoran :alternatifDari :MaduMurni .
+:ObatBatukAntitusif :alternatifDari :MaduMurni .
+
+# 3. Teh Jahe (Alternatif untuk Antasida/Mual - Aman untuk Maag/Hamil)
+###  http://www.semanticweb.org/ontologies/2025/0/teman-klinik/TehJahe
+:TehJahe rdf:type owl:NamedIndividual, :PengobatanAlternatif ;
+    rdfs:label "Teh Jahe Hangat"@id ;
+    :deskripsiSingkat "Minuman herbal untuk meredakan mual dan kembung"@id ;
+    :termasukKategori :Antasida ;
+    :dosisObat "1 Cangkir saat mual"@id ;
+    :caraPakai "Seduh jahe geprek dengan air panas"@id ;
+    :hargaObat 5000 ;
+    :golonganObat "Herbal"@id ;
+    :bentukSediaan "Minuman"@id ;
+    :alternatifDari :AntasidaSederhana, :Oralit ;
+    :meredakanGejala :Mual, :PerutKembung, :KramPerut .
+
+:AntasidaSederhana :alternatifDari :TehJahe .
+:Oralit :alternatifDari :TehJahe .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
