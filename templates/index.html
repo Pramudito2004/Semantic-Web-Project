@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🩺 Teman Klinik</h1>
+            <h1>Teman Klinik</h1>
             <p class="subtitle">Sistem Rekomendasi Obat Simptomatis Berbasis Semantic Web</p>
         </header>
 
@@ -20,7 +20,7 @@
             <form id="rekomendasiForm">
                 <!-- Section 1: Gejala -->
                 <section class="input-section">
-                    <h2>1️⃣ Gejala yang Dialami</h2>
+                    <h2>1. Gejala yang Dialami</h2>
                     <p class="section-desc">Pilih semua gejala yang Anda rasakan</p>
                     <div class="checkbox-grid" id="gejalaGrid">
                         {% for gejala in gejala_list %}
@@ -40,7 +40,7 @@
 
                 <!-- Section 2: Kondisi Khusus -->
                 <section class="input-section">
-                    <h2>2️⃣ Kondisi Khusus</h2>
+                    <h2>2. Kondisi Khusus</h2>
                     <p class="section-desc">Pilih jika Anda memiliki kondisi berikut (bisa lebih dari 1)</p>
                     <div class="checkbox-grid" id="kondisiGrid">
                         {% for kondisi in kondisi_list %}
@@ -55,7 +55,7 @@
 
                 <!-- Section 3: Alergi -->
                 <section class="input-section">
-                    <h2>3️⃣ Alergi Obat</h2>
+                    <h2>3. Alergi Obat</h2>
                     <p class="section-desc">Pilih bahan aktif yang menyebabkan alergi pada Anda</p>
                     <div class="checkbox-grid" id="alergiGrid">
                         {% for alergi in alergi_list %}
@@ -68,12 +68,12 @@
                     </div>
                 </section>
 
-                <button type="submit" class="btn-submit">🔍 Cari Rekomendasi Obat</button>
+                <button type="submit" class="btn-submit">Cari Rekomendasi Obat</button>
             </form>
 
             <!-- Results Section -->
             <section id="results" class="results-section" style="display: none;">
-                <h2>📋 Hasil Rekomendasi</h2>
+                <h2>Hasil Rekomendasi</h2>
 
                 <!-- Warning -->
                 <div id="warningBox" class="warning-box" style="display: none;"></div>
@@ -96,9 +96,8 @@
         </main>
 
         <footer>
-            <p>⚠️ Disclaimer: Sistem ini hanya untuk referensi. Konsultasikan dengan dokter atau apoteker untuk
-                penanganan yang tepat.</p>
-            <p>Dibuat dengan ❤️ menggunakan Semantic Web & Apache Jena Fuseki</p>
+            <p>Disclaimer: Sistem ini hanya untuk referensi. Konsultasikan dengan dokter atau apoteker.</p>
+            <p>Dibuat menggunakan Semantic Web & Apache Jena Fuseki</p>
         </footer>
     </div>
 
@@ -146,21 +145,20 @@
             // Rekomendasi
             const rekomendasiList = document.getElementById('rekomendasiList');
             if (data.rekomendasi && data.rekomendasi.length > 0) {
-                rekomendasiList.innerHTML = '<h3>✅ Obat yang Direkomendasikan</h3>' +
+                rekomendasiList.innerHTML = '<h3>Obat yang Direkomendasikan</h3>' +
                     data.rekomendasi.map(obat => `
                         <div class="obat-card">
-                            <h4>💊 ${obat.nama}</h4>
+                            <h4>${obat.nama}</h4>
                             <p class="obat-desc">${obat.deskripsi}</p>
-                            ${obat.contohMerek ? `<div class="contoh-merek">🏷️ <strong>Contoh Merek:</strong> ${obat.contohMerek}</div>` : ''}
+                            ${obat.contohMerek ? `<div class="contoh-merek"><strong>Contoh Merek:</strong> ${obat.contohMerek}</div>` : ''}
                             <div class="obat-details">
                                 <div class="detail-item"><strong>Untuk Gejala:</strong> ${obat.untukGejala}</div>
                                 <div class="detail-item"><strong>Dosis:</strong> ${obat.dosis}</div>
                                 <div class="detail-item"><strong>Cara Pakai:</strong> ${obat.caraPakai}</div>
-                                <div class="detail-item"><strong>Golongan:</strong> <span class="golongan ${obat.golongan.replace(' ', '-').toLowerCase()}">${obat.golongan}</span></div>
+                                <div class="detail-item"><strong>Golongan:</strong> <span class="golongan">${obat.golongan}</span></div>
                                 <div class="detail-item"><strong>Bentuk:</strong> ${obat.bentuk}</div>
-                                <div class="detail-item"><strong>Harga:</strong> Rp ${Number(obat.harga).toLocaleString('id-ID')}</div>
                             </div>
-                            ${obat.peringatan ? `<div class="obat-warning">⚠️ ${obat.peringatan}</div>` : ''}
+                            ${obat.peringatan ? `<div class="obat-warning">PERINGATAN: ${obat.peringatan}</div>` : ''}
                         </div>
                     `).join('');
             } else {
@@ -174,8 +172,8 @@
                 excludedSection.style.display = 'block';
                 excludedList.innerHTML = data.excluded.map(item => `
                     <div class="excluded-card">
-                        <span class="excluded-name">🚫 ${item.nama}</span>
-                        <span class="excluded-reason">${item.alasan}</span>
+                        <span class="excluded-name">DILARANG: ${item.nama}</span> -- 
+                        <span class="excluded-reason">Alasan: ${item.alasan}</span>
                     </div>
                 `).join('');
             } else {
@@ -189,7 +187,7 @@
                 alternatifSection.style.display = 'block';
                 alternatifList.innerHTML = data.alternatif.map(item => `
                     <div class="alternatif-card">
-                        <h4>🌿 ${item.nama}</h4>
+                        <h4>${item.nama}</h4>
                         <p>${item.deskripsi}</p>
                         <div class="detail-item"><strong>Dosis:</strong> ${item.dosis}</div>
                         <div class="detail-item"><strong>Harga:</strong> Rp ${Number(item.harga).toLocaleString('id-ID')}</div>
