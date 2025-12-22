@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teman Klinik - Rekomendasi Obat Simptomatis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🩺 Teman Klinik</h1>
+            <p class="subtitle">Sistem Rekomendasi Obat Simptomatis Berbasis Semantic Web</p>
+        </header>
+
+        <main>
+            <form id="rekomendasiForm">
+                <!-- Section 1: Gejala -->
+                <section class="input-section">
+                    <h2>1️⃣ Gejala yang Dialami</h2>
+                    <p class="section-desc">Pilih semua gejala yang Anda rasakan</p>
+                    <div class="checkbox-grid" id="gejalaGrid">
+                        {% for gejala in gejala_list %}
+                        <label
+                            class="checkbox-item {% if gejala.tingkat == 'Berat' %}severe{% elif gejala.tingkat == 'Sedang' %}moderate{% endif %}">
+                            <input type="checkbox" name="gejala" value="{{ gejala.uri }}">
+                            <span class="checkmark"></span>
+                            <span class="label-text">{{ gejala.nama }}</span>
+                            <span
+                                class="badge {% if gejala.tingkat == 'Berat' %}badge-severe{% elif gejala.tingkat == 'Sedang' %}badge-moderate{% else %}badge-mild{% endif %}">
+                                {{ gejala.tingkat }}
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <!-- Section 2: Kondisi Khusus -->
+                <section class="input-section">
+                    <h2>2️⃣ Kondisi Khusus</h2>
+                    <p class="section-desc">Pilih jika Anda memiliki kondisi berikut (bisa lebih dari 1)</p>
+                    <div class="checkbox-grid" id="kondisiGrid">
+                        {% for kondisi in kondisi_list %}
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="kondisi" value="{{ kondisi.uri }}">
+                            <span class="checkmark"></span>
+                            <span class="label-text">{{ kondisi.nama }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <!-- Section 3: Alergi -->
+                <section class="input-section">
+                    <h2>3️⃣ Alergi Obat</h2>
+                    <p class="section-desc">Pilih bahan aktif yang menyebabkan alergi pada Anda</p>
+                    <div class="checkbox-grid" id="alergiGrid">
+                        {% for alergi in alergi_list %}
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="alergi" value="{{ alergi.uri }}">
+                            <span class="checkmark"></span>
+                            <span class="label-text">{{ alergi.nama }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <button type="submit" class="btn-submit">🔍 Cari Rekomendasi Obat</button>
+            </form>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section" style="display: none;">
+                <h2>📋 Hasil Rekomendasi</h2>
+
+                <!-- Warning -->
+                <div id="warningBox" class="warning-box" style="display: none;"></div>
+
+                <!-- Recommended Drugs -->
+                <div id="rekomendasiList" class="obat-list"></div>
+
+                <!-- Excluded Drugs -->
+                <div id="excludedSection" style="display: none;">
+                    <h3>❌ Obat yang Dihindari</h3>
+                    <div id="excludedList" class="excluded-list"></div>
+                </div>
+
+                <!-- Herbal Alternatives -->
+                <div id="alternatifSection" style="display: none;">
+                    <h3>🌿 Alternatif Herbal</h3>
+                    <div id="alternatifList" class="alternatif-list"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>⚠️ Disclaimer: Sistem ini hanya untuk referensi. Konsultasikan dengan dokter atau apoteker untuk
+                penanganan yang tepat.</p>
+            <p>Dibuat dengan ❤️ menggunakan Semantic Web & Apache Jena Fuseki</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('rekomendasiForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const gejala = Array.from(document.querySelectorAll('input[name="gejala"]:checked')).map(el => el.value);
+            const kondisi = Array.from(document.querySelectorAll('input[name="kondisi"]:checked')).map(el => el.value);
+            const alergi = Array.from(document.querySelectorAll('input[name="alergi"]:checked')).map(el => el.value);
+
+            if (gejala.length === 0) {
+                alert('Pilih minimal 1 gejala!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/rekomendasi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ gejala, kondisi, alergi })
+                });
+
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan. Pastikan server Fuseki berjalan.');
+            }
+        });
+
+        function displayResults(data) {
+            const resultsSection = document.getElementById('results');
+            resultsSection.style.display = 'block';
+
+            // Warning
+            const warningBox = document.getElementById('warningBox');
+            if (data.warning) {
+                warningBox.innerHTML = data.warning;
+                warningBox.style.display = 'block';
+            } else {
+                warningBox.style.display = 'none';
+            }
+
+            // Rekomendasi
+            const rekomendasiList = document.getElementById('rekomendasiList');
+            if (data.rekomendasi && data.rekomendasi.length > 0) {
+                rekomendasiList.innerHTML = '<h3>✅ Obat yang Direkomendasikan</h3>' +
+                    data.rekomendasi.map(obat => `
+                        <div class="obat-card">
+                            <h4>💊 ${obat.nama}</h4>
+                            <p class="obat-desc">${obat.deskripsi}</p>
+                            ${obat.contohMerek ? `<div class="contoh-merek">🏷️ <strong>Contoh Merek:</strong> ${obat.contohMerek}</div>` : ''}
+                            <div class="obat-details">
+                                <div class="detail-item"><strong>Untuk Gejala:</strong> ${obat.untukGejala}</div>
+                                <div class="detail-item"><strong>Dosis:</strong> ${obat.dosis}</div>
+                                <div class="detail-item"><strong>Cara Pakai:</strong> ${obat.caraPakai}</div>
+                                <div class="detail-item"><strong>Golongan:</strong> <span class="golongan ${obat.golongan.replace(' ', '-').toLowerCase()}">${obat.golongan}</span></div>
+                                <div class="detail-item"><strong>Bentuk:</strong> ${obat.bentuk}</div>
+                                <div class="detail-item"><strong>Harga:</strong> Rp ${Number(obat.harga).toLocaleString('id-ID')}</div>
+                            </div>
+                            ${obat.peringatan ? `<div class="obat-warning">⚠️ ${obat.peringatan}</div>` : ''}
+                        </div>
+                    `).join('');
+            } else {
+                rekomendasiList.innerHTML = '<p class="no-result">Tidak ada obat yang cocok ditemukan.</p>';
+            }
+
+            // Excluded
+            const excludedSection = document.getElementById('excludedSection');
+            const excludedList = document.getElementById('excludedList');
+            if (data.excluded && data.excluded.length > 0) {
+                excludedSection.style.display = 'block';
+                excludedList.innerHTML = data.excluded.map(item => `
+                    <div class="excluded-card">
+                        <span class="excluded-name">🚫 ${item.nama}</span>
+                        <span class="excluded-reason">${item.alasan}</span>
+                    </div>
+                `).join('');
+            } else {
+                excludedSection.style.display = 'none';
+            }
+
+            // Alternatif
+            const alternatifSection = document.getElementById('alternatifSection');
+            const alternatifList = document.getElementById('alternatifList');
+            if (data.alternatif && data.alternatif.length > 0) {
+                alternatifSection.style.display = 'block';
+                alternatifList.innerHTML = data.alternatif.map(item => `
+                    <div class="alternatif-card">
+                        <h4>🌿 ${item.nama}</h4>
+                        <p>${item.deskripsi}</p>
+                        <div class="detail-item"><strong>Dosis:</strong> ${item.dosis}</div>
+                        <div class="detail-item"><strong>Harga:</strong> Rp ${Number(item.harga).toLocaleString('id-ID')}</div>
+                    </div>
+                `).join('');
+            } else {
+                alternatifSection.style.display = 'none';
+            }
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
